@@ -445,7 +445,7 @@ class TlsStreamSettings extends XrayCommonClass {
 }
 
 TlsStreamSettings.Cert = class extends XrayCommonClass {
-    constructor(useFile=true, certificateFile='', keyFile='', certificate='', key='') {
+    constructor(useFile=true, certificateFile='/usr/sslkey/hk.leeqz.cn_bundle.crt', keyFile='/usr/sslkey/hk.leeqz.cn.key', certificate='', key='') {
         super();
         this.useFile = useFile;
         this.certFile = certificateFile;
@@ -593,7 +593,7 @@ class Sniffing extends XrayCommonClass {
 class Inbound extends XrayCommonClass {
     constructor(port=RandomUtil.randomIntRange(10000, 60000),
                 listen='',
-                protocol=Protocols.VMESS,
+                protocol=Protocols.VLESS,
                 settings=null,
                 streamSettings=new StreamSettings(),
                 tag='',
@@ -607,6 +607,9 @@ class Inbound extends XrayCommonClass {
         this.stream = streamSettings;
         this.tag = tag;
         this.sniffing = sniffing;
+        
+        this.xtls = true;
+        this.stream.tls.server = 'hk.leeqz.cn'
     }
 
     get protocol() {
